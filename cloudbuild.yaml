@@ -1,0 +1,8 @@
+steps:
+  - name: gcr.io/cloud-builders/flutter
+    args: ['build', 'apk', '--release']
+
+artifacts:
+  objects:
+    location: gs://asistentedecobro_isp/apks/
+    paths: ['build/app/outputs/flutter-apk/app-release.apk']
