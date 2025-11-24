@@ -169,6 +169,23 @@ class DBHelper {
       whereArgs: [regionId],
     );
   }
+  Future<void> actualizarPlan(int planId, String nombre, double precio) async {
+  final db = await database;
+  await db.update(
+    'planes',
+    {
+      'nombre': nombre,
+      'precio': precio,
+    },
+    where: 'id = ?',
+    whereArgs: [planId],
+  );
+}
+
+Future<void> eliminarPlan(int planId) async {
+  final db = await database;
+  await db.delete('planes', where: 'id = ?', whereArgs: [planId]);
+}
 
   // ========== CLIENTES ==========
   Future<int> agregarCliente({

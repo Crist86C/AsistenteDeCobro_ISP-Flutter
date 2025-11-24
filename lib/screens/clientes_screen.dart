@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../database/db_helper.dart';
 import 'region_clientes_screen.dart';
+import 'planes_region_screen.dart';
 
 class ClientesScreen extends StatefulWidget {
   const ClientesScreen({Key? key}) : super(key: key);
@@ -57,6 +58,53 @@ class _ClientesScreenState extends State<ClientesScreen> {
     );
   }
 
+  void _mostrarOpciones(Map region) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.card_giftcard, color: Colors.blue),
+              title: const Text('Administrar Planes'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PlanesRegionScreen(
+                      regionId: region['id'],
+                      regionNombre: region['nombre'],
+                    ),
+                  ),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.people, color: Colors.green),
+              title: const Text('Ver Clientes'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => RegionClientesScreen(
+                      regionId: region['id'],
+                      regionNombre: region['nombre'],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,20 +148,8 @@ class _ClientesScreenState extends State<ClientesScreen> {
                             : Colors.green,
                       ),
                     ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.arrow_forward),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => RegionClientesScreen(
-                              regionId: region['id'],
-                              regionNombre: region['nombre'],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                    trailing: const Icon(Icons.more_vert),
+                    onTap: () => _mostrarOpciones(region),
                   ),
                 );
               },

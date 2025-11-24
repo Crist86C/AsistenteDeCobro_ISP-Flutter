@@ -58,6 +58,9 @@ class _PlanesScreenState extends State<PlanesScreen> {
       );
       widget.onClienteAgregado();
       Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Cliente agregado exitosamente')),
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
@@ -73,16 +76,28 @@ class _PlanesScreenState extends State<PlanesScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           if (planes.isEmpty)
-            const Padding(
-              padding: EdgeInsets.all(16),
-              child: Card(
-                color: Colors.orange,
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    'Primero debes crear planes en esta región',
-                    style: TextStyle(color: Colors.white),
-                  ),
+            Card(
+              color: Colors.orange.shade100,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    const Icon(Icons.warning, color: Colors.orange, size: 40),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Primero debes crear planes en esta región',
+                      style: TextStyle(color: Colors.orange, fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Ir a Planes'),
+                    ),
+                  ],
                 ),
               ),
             )
